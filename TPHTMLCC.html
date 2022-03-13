@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment CardCredit</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <style>
+        p {
+            text-align: right;
+            margin-top: 0.8rem;
+        }
+        button {
+            border: none;
+            background-color: aqua;
+            height: 30px;
+            border-radius: 5px;
+        }
+    </style>
+    <script>
+        function check()
+        {
+            paypal = document.getElementById('paypal');
+            CardCredit = document.getElementById('CardCredit');
+            if (paypal.checked == true) {
+                window.open('index.html', '_self');
+            }else if (CardCredit.checked == true) {
+                window.open('TPHTMLCC.html', '_self');
+            }
+        }
+        function Valider()
+        {
+            var IsValideForm = false;
+            var Adresse = document.getElementById('Adresse').value;
+            var NameClient = document.getElementById('NameClient').value;
+            var CodeVerification = document.getElementById('CodeVerification').value;
+            var ExpCodeVerification = /^[0-9]{3}$/;
+            var CardCreditPay = document.getElementById('CardCreditPay').value;
+            var ExpCardCredit = /^[0-9]{16}$/;
+            var NumberPhone = document.getElementById('NumberPhone').value;
+            var ExpNumberPhone = /^(5|6|7)[0-9]{8}$/;
+            if (ExpNumberPhone.test(NumberPhone) == true) {
+                document.getElementById('ErrNumberPhone').innerHTML = "<img src='Capture3.PNG' style='width: 20px;'/>";
+                document.getElementById('Tel').innerHTML = NumberPhone;
+                IsValideForm = true
+            }else {
+                document.getElementById('ErrNumberPhone').innerHTML = "<img src='Capture4.PNG' style='width: 20px;'/>";
+            }
+            if (ExpCardCredit.test(CardCreditPay) == true) {
+                document.getElementById('ErrCardCredit').innerHTML = "<img src='Capture3.PNG' style='width: 20px;'/>";
+                IsValideForm = true
+            }else {
+                document.getElementById('ErrCardCredit').innerHTML = "<img src='Capture4.PNG' style='width: 20px;'/>";
+            }if (ExpCodeVerification.test(CodeVerification) == true) {
+                document.getElementById('ErrCodeVerification').innerHTML = "<img src='Capture3.PNG' style='width: 20px;'/>";
+                IsValideForm = true
+            }else {
+                document.getElementById('ErrCodeVerification').innerHTML = "<img src='Capture4.PNG' style='width: 20px;'/>";
+            }
+            document.getElementById('Name').innerHTML = NameClient;
+            return IsValideForm;
+        }
+        function Vider()
+        {
+            document.getElementById('NameClient').value = "";
+            document.getElementById('NumberPhone').value = "";
+            document.getElementById('Adresse').value = "";
+            document.getElementById('CodeVerification').value = "";
+            document.getElementById('CardCreditPay').value = "";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <form>
+            <h2 class="text-center text-info">Information de payment</h2>
+            <table>
+                <tr>
+                    <td>
+                        <p>Nom et prenom de client:</p>
+                    </td>
+                    <td>
+                        <input type="text" required id="NameClient">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Adresse:</p>
+                    </td>
+                    <td>
+                        <input type="text" required id="Adresse">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Numéro de téléphone:(+212)</p>
+                    </td>
+                    <td>
+                        <input type="text" required id="NumberPhone">
+                    </td>
+                    <td>
+                        <p class="text-danger ms-2" id="ErrNumberPhone"></p>
+                    </td>
+                </tr>
+                <table>
+                    <tr>
+                        <td>
+                            <p style="text-align: left;">Type de payment:</p>
+                            <input onclick="check()" style="margin-left: 3rem;" type="radio" name="Pay" id="paypal"><img src="Capture.PNG">
+                            <input onclick="check()" style="margin-left: 2rem;" type="radio" name="Pay" id="CardCredit">Par carte bancaire
+                            <img src="Capture2.PNG" >
+                        </td>
+                    </tr>
+                </table>
+                <div style="margin-left: 4.6rem;margin-top: 1.5rem;">
+                    <table>  
+                        <tr>
+                            <td>
+                                <p>Selectioner le type de la carte:</p>
+                            </td>
+                            <td>
+                                <select>
+                                    <option value="">Visa</option>
+                                    <option value="">Master card</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Numero de la carte:</p>
+                            </td>
+                            <td>
+                                <input type="text" required id="CardCreditPay">
+                            </td>
+                            <td>
+                                <p class="text-danger ms-2" id="ErrCardCredit"></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Experation date:</p>    
+                            </td>
+                            <td>
+                                <input type="number" style="width: 4rem;" placeholder="MM">
+                                <input type="number" style="width: 4rem;" placeholder="AAAA">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>Code de verification:</p>
+                            </td>
+                            <td>
+                                <input type="number" style="width: 4rem;" id="CodeVerification"> 
+                            </td>
+                            <td>
+                                <p class="text-danger ms-2" id="ErrCodeVerification"></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </table>
+            <table>
+                <tr>
+                    <td>
+                        <p>NB:N'oubliez d'autoriser la transaction.</p>
+                    </td>
+                </tr>
+            </table>
+            <div style="margin-left: 20rem; margin-top: 1rem;">
+                <table>
+                    <tr>
+                        <td>
+                            <button onclick="Valider()">Valider</button>
+                            <button onclick="Vider()">Effacer</button>
+                        </td>
+                    </tr>
+                </table>
+            </div> 
+        </form>
+    </div>
+    <div class="container">
+        <div class="container">
+            <table>
+                <tr>
+                    <td>
+                        <p>Nom et Prénom du client:</p>
+                    </td>
+                    <td>
+                        <p style="margin-left: 0.2rem;text-align: left;font-weight: bold;" id="Name"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Numéro du telephone: (+212)</p>
+                    </td>
+                    <td>
+                        <p style="margin-left: 0.2rem;text-align: left;font-weight: bold;" id="Tel"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Type de Payment:</p>
+                    </td>
+                    <td>
+                        <p style="margin-left: 0.2rem;text-align: left;font-weight: bold;">Par cate bancaire</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
